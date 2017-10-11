@@ -15,7 +15,7 @@ public class TeleOp_Main extends OpMode {
     private DcMotor motorWinch;
     private Servo servoLeftClaw;
     private Servo servoRightClaw;
-    private boolean claw; //true = on false = off
+    private boolean claw; //true = closed false = open
 
     @Override
     public void init() {
@@ -58,15 +58,19 @@ public class TeleOp_Main extends OpMode {
 
 //---------------------------------------------------------------
         //The values for the servos are not CURRENTLY accurate and may be subject to change when testing the robot
-        if (gamepad1.a && !claw){
-            servoRightClaw.setPosition(90);
-            servoLeftClaw.setPosition(90);
-            claw = !claw;
-        } else if (gamepad1.a && claw){
-            servoLeftClaw.setPosition(0);
-            servoRightClaw.setPosition(0);
-            claw = !claw;
+        if (gamepad1.a) claw = true;
+        else if(claw) {
+            if (servoLeftClaw.getPosition() == 90) {
+                servoLeftClaw.setPosition(0);
+                servoRightClaw.setPosition(0);
+            } else {
+                servoLeftClaw.setPosition(90);
+                servoRightClaw.setPosition(90);
+            }
+
+            claw = false;
         }
+
 //---------------------------------------------------------------
 
     }
