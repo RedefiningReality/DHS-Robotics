@@ -12,24 +12,26 @@ public class TeleOp_Main extends OpMode {
 
     private DcMotor motorRight;
     private DcMotor motorLeft;
+
     private DcMotor motorWinch;
+
     private Servo servoLeftClaw;
     private Servo servoRightClaw;
-    private boolean claw; //true = closed false = open
+    private boolean claw;
 
     @Override
     public void init() {
 
         motorRight = hardwareMap.dcMotor.get("right");
         motorLeft = hardwareMap.dcMotor.get("left");
+
         motorWinch = hardwareMap.dcMotor.get("winch");
+
         servoLeftClaw = hardwareMap.servo.get("leftClaw");
         servoRightClaw = hardwareMap.servo.get("rightClaw");
 
-
         motorRight.setDirection(DcMotor.Direction.REVERSE);
 
-        //The values for the servos are not CURRENTLY acurate and may be subject to change when testing the robot
         servoLeftClaw.setPosition(0);
         servoRightClaw.setPosition(0);
         claw = false;
@@ -57,21 +59,18 @@ public class TeleOp_Main extends OpMode {
         else motorWinch.setPower(0);
 
 //---------------------------------------------------------------
-        //The values for the servos are not CURRENTLY accurate and may be subject to change when testing the robot
         if (gamepad1.a) claw = true;
         else if(claw) {
-            if (servoLeftClaw.getPosition() == 90) {
-                servoLeftClaw.setPosition(0);
-                servoRightClaw.setPosition(0);
+            if (servoLeftClaw.getPosition() == 1d) {
+                servoLeftClaw.setPosition(0d);
+                servoRightClaw.setPosition(0d);
             } else {
-                servoLeftClaw.setPosition(90);
-                servoRightClaw.setPosition(90);
+                servoLeftClaw.setPosition(1d);
+                servoRightClaw.setPosition(1d);
             }
 
             claw = false;
         }
-
-//---------------------------------------------------------------
 
     }
 
