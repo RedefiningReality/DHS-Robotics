@@ -48,6 +48,7 @@ public class TeleOp_Mechanum extends OpMode {
     @Override
     public void loop() {
         double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y) * translationInputScale;
+
         double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
         double rightX = gamepad1.right_stick_x * rotationInputScale;
 

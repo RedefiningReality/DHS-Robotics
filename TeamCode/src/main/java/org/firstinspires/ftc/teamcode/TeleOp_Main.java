@@ -10,9 +10,10 @@ import com.qualcomm.robotcore.util.Range;
 public class TeleOp_Main extends OpMode {
     private float inputScale = 1f;
 
-    private DcMotor motorRight;
-    private DcMotor motorLeft;
-
+    private DcMotor FL;
+    private DcMotor BL;
+    private DcMotor FR;
+    private DcMotor BR;
     private DcMotor motorWinch;
 
     private Servo servoLeftClaw;
@@ -22,15 +23,19 @@ public class TeleOp_Main extends OpMode {
     @Override
     public void init() {
 
-        motorRight = hardwareMap.dcMotor.get("right");
-        motorLeft = hardwareMap.dcMotor.get("left");
+        FL = hardwareMap.dcMotor.get("FL");
+        BL = hardwareMap.dcMotor.get("BL");
+        FR = hardwareMap.dcMotor.get("FR");
+        BR = hardwareMap.dcMotor.get("BR");
 
         motorWinch = hardwareMap.dcMotor.get("winch");
 
         servoLeftClaw = hardwareMap.servo.get("leftClaw");
         servoRightClaw = hardwareMap.servo.get("rightClaw");
 
-        motorRight.setDirection(DcMotor.Direction.REVERSE);
+        FR.setDirection(DcMotor.Direction.REVERSE);
+        BR.setDirection(DcMotor.Direction.REVERSE);
+
 
         servoLeftClaw.setPosition(0);
         servoRightClaw.setPosition(0);
@@ -49,13 +54,13 @@ public class TeleOp_Main extends OpMode {
         right *= inputScale;
         left *= inputScale;
 
-        motorRight.setPower(right);
-        motorLeft.setPower(left);
-
+        FR.setPower(right);
+        FL.setPower(left);
+        BR.setPower(right);
+        BL.setPower(left);
 //---------------------------------------------------------------
-        if(gamepad1.right_bumper) motorWinch.setPower(0.6);
-        else if(gamepad1.left_bumper) motorWinch.setPower(-0.6);
-        else if(gamepad1.left_bumper && gamepad1.right_bumper) motorWinch.setPower(0);
+        if(gamepad1.b) motorWinch.setPower(0.6);
+        else if(gamepad1.x) motorWinch.setPower(-0.6);
         else motorWinch.setPower(0);
 
 //---------------------------------------------------------------
@@ -64,7 +69,7 @@ public class TeleOp_Main extends OpMode {
             if (servoLeftClaw.getPosition() == 1d) {
                 servoLeftClaw.setPosition(0d);
                 servoRightClaw.setPosition(0d);
-            } else {
+            } else if (servoLeftClaw.getPosition() == 0d) {
                 servoLeftClaw.setPosition(1d);
                 servoRightClaw.setPosition(1d);
             }

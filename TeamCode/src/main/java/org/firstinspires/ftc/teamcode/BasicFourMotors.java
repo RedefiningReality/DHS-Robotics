@@ -117,7 +117,6 @@ public class BasicFourMotors extends OpMode {
 
 			toggleSpeed = false;
         }
-		
 		// However, sometimes we want the rest of the loop() method to be executed and the toggle action to be performed AT THE SAME TIME
 		// For this, we have to use multithreading (if you ever decide take Data Structures, you will learn about this concept if you don't already know it)
 		// Do not worry at all if you do not understand how the following code works - it is just here for your reference
