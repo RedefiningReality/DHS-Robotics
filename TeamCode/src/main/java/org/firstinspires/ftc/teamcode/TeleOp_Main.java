@@ -33,8 +33,8 @@ public class TeleOp_Main extends OpMode {
         servoLeftClaw = hardwareMap.servo.get("leftClaw");
         servoRightClaw = hardwareMap.servo.get("rightClaw");
 
-        FR.setDirection(DcMotor.Direction.REVERSE);
-        BR.setDirection(DcMotor.Direction.REVERSE);
+        FL.setDirection(DcMotor.Direction.REVERSE);
+        BL.setDirection(DcMotor.Direction.REVERSE);
 
 
         servoLeftClaw.setPosition(0);
@@ -59,8 +59,8 @@ public class TeleOp_Main extends OpMode {
         BR.setPower(right);
         BL.setPower(left);
 //---------------------------------------------------------------
-        if(gamepad1.b) motorWinch.setPower(0.6);
-        else if(gamepad1.x) motorWinch.setPower(-0.6);
+        if(gamepad2.b) motorWinch.setPower(0.6);
+        else if(gamepad2.x) motorWinch.setPower(-0.6);
         else motorWinch.setPower(0);
 
 //---------------------------------------------------------------
