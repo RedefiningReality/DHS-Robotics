@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="TeleOp Main", group="Driver Controlled")
 public class TeleOp_Main extends OpMode {
-    private float inputScale = 1f;
+    private float inputScale = 0.7f;
 
     private DcMotor FL;
     private DcMotor BL;
@@ -36,10 +36,10 @@ public class TeleOp_Main extends OpMode {
 
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
-        // FR.setDirection(DcMotor.Direction.REVERSE); uncomment if weird motor does its thing
+        FR.setDirection(DcMotor.Direction.REVERSE); // uncomment if weird motor does its thing
 
         servoLeftClaw.setPosition(0);
-        servoRightClaw.setPosition(0);
+        servoRightClaw.setPosition(1);
         claw = false;
 
     }
@@ -60,8 +60,8 @@ public class TeleOp_Main extends OpMode {
         BR.setPower(right);
         BL.setPower(left);
 //---------------------------------------------------------------
-        if(gamepad2.b) motorWinch.setPower(0.6);
-        else if(gamepad2.x) motorWinch.setPower(-0.6);
+        if(gamepad2.b) motorWinch.setPower(0.3);
+        else if(gamepad2.x) motorWinch.setPower(-0.3);
         else motorWinch.setPower(0);
 
 //---------------------------------------------------------------
@@ -69,10 +69,10 @@ public class TeleOp_Main extends OpMode {
         else if(claw) {
             if (servoLeftClaw.getPosition() == 1d) {
                 servoLeftClaw.setPosition(0d);
-                servoRightClaw.setPosition(0d);
+                servoRightClaw.setPosition(1d);
             } else if (servoLeftClaw.getPosition() == 0d) {
                 servoLeftClaw.setPosition(1d);
-                servoRightClaw.setPosition(1d);
+                servoRightClaw.setPosition(0d);
             }
 
             claw = false;
