@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode.autonomous.dependencies;
  * Created by robotics on 11/7/2017.
  */
 
-public abstract class MechnamAutonomous extends AutonomousFourMotors {
+public abstract class MechanumAutonomous extends AutonomousFourMotors {
 
     protected void forwards(double speed, double inches, double timeout) throws InterruptedException {
         drive(speed, inches, inches, timeout);
