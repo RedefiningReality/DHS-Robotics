@@ -40,8 +40,8 @@ public class TeleOp_Mechanum extends OpMode {
         motorWinch = hardwareMap.dcMotor.get("winch");
         extensionMotor = hardwareMap.dcMotor.get("extension");
 
-        servoLeftClaw = hardwareMap.servo.get("left claw");
-        servoRightClaw = hardwareMap.servo.get("right claw");
+        servoLeftClaw = hardwareMap.servo.get("LC");
+        servoRightClaw = hardwareMap.servo.get("RC");
 
         servoLeftClaw.setPosition(1);
         servoRightClaw.setPosition(0);

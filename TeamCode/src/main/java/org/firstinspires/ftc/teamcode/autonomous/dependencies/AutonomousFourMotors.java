@@ -60,7 +60,14 @@ public abstract class AutonomousFourMotors extends LinearOpMode {
     }
 
     protected void drive(double speed,
-                       double leftInches, double rightInches,
+                         double leftInches, double rightInches,
+                         double timeoutS) throws InterruptedException {
+        drive(speed, leftInches, rightInches, leftInches, rightInches, timeoutS);
+    }
+
+    protected void drive(double speed,
+                       double frontLeftInches, double frontRightInches,
+                       double backLeftInches, double backRightInches,
                        double timeoutS) throws InterruptedException {
         int newFrontLeftTarget;
         int newFrontRightTarget;
@@ -71,10 +78,10 @@ public abstract class AutonomousFourMotors extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newFrontLeftTarget = motorFrontLeft.getCurrentPosition() - (int)(leftInches * COUNTS_PER_INCH);
-            newFrontRightTarget = motorFrontRight.getCurrentPosition() - (int)(rightInches * COUNTS_PER_INCH);
-            newBackLeftTarget = motorBackLeft.getCurrentPosition() - (int)(leftInches * COUNTS_PER_INCH);
-            newBackRightTarget = motorBackRight.getCurrentPosition() - (int)(rightInches * COUNTS_PER_INCH);
+            newFrontLeftTarget = motorFrontLeft.getCurrentPosition() - (int)(frontLeftInches * COUNTS_PER_INCH);
+            newFrontRightTarget = motorFrontRight.getCurrentPosition() - (int)(frontRightInches * COUNTS_PER_INCH);
+            newBackLeftTarget = motorBackLeft.getCurrentPosition() - (int)(backLeftInches * COUNTS_PER_INCH);
+            newBackRightTarget = motorBackRight.getCurrentPosition() - (int)(backRightInches * COUNTS_PER_INCH);
             motorFrontLeft.setTargetPosition(newFrontLeftTarget);
             motorFrontRight.setTargetPosition(newFrontRightTarget);
             motorBackLeft.setTargetPosition(newBackLeftTarget);
