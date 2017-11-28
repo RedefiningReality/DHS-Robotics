@@ -26,10 +26,10 @@ public class TeleOp_Mechanum extends OpMode {
     @Override
     public void init() {
 
-        frontRight = hardwareMap.dcMotor.get("front right");
-        frontLeft = hardwareMap.dcMotor.get("front left");
-        backRight = hardwareMap.dcMotor.get("back right");
-        backLeft = hardwareMap.dcMotor.get("back left");
+        frontRight = hardwareMap.dcMotor.get("FR");
+        frontLeft = hardwareMap.dcMotor.get("FL");
+        backRight = hardwareMap.dcMotor.get("BR");
+        backLeft = hardwareMap.dcMotor.get("BL");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
