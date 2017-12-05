@@ -11,12 +11,18 @@ import org.firstinspires.ftc.teamcode.autonomous.dependencies.MechanumAutonomous
 @Autonomous(name="TestMechanumAutonomuous Four Motors", group="TestAutonomous")
 public class TestMechanumAutonomous extends MechanumAutonomous {
 
-    //ColorSensor colorSensor;
+    ColorSensor colorSensor;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        //colorSensor = hardwareMap.colorSensor.get("colourSensor");
+        colorSensor = hardwareMap.colorSensor.get("colourSensor");
         initializeMotors();
+
+        telemetry.setAutoClear(false);
+        telemetry.addData("Colour R: ", colorSensor.red());
+        telemetry.addData("Colour G: ", colorSensor.green());
+        telemetry.addData("Colour B: ", colorSensor.blue());
+        telemetry.update();
 
         forwards(2);
         backwards(2);
