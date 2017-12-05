@@ -19,8 +19,12 @@ public class TeleOp_Mechanum extends OpMode {
     private DcMotor backRight;
     private DcMotor backLeft;
 
+    private DcMotor motorAngle;
+
     private DcMotor motorWinch;
     private DcMotor extensionMotor;
+
+    private Servo servoReallyLongVariableNameBecauseWhyNot;
 
     private Servo servoLeftClaw;
     private Servo servoRightClaw;
@@ -34,6 +38,8 @@ public class TeleOp_Mechanum extends OpMode {
         backRight = hardwareMap.dcMotor.get("BR");
         backLeft = hardwareMap.dcMotor.get("BL");
 
+        motorAngle = hardwareMap.dcMotor.get("angle");
+
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
 
@@ -42,6 +48,7 @@ public class TeleOp_Mechanum extends OpMode {
 
         servoLeftClaw = hardwareMap.servo.get("LC");
         servoRightClaw = hardwareMap.servo.get("RC");
+        servoReallyLongVariableNameBecauseWhyNot = hardwareMap.servo.get("relic");
 
         servoLeftClaw.setPosition(1);
         servoRightClaw.setPosition(0);
@@ -68,6 +75,7 @@ public class TeleOp_Mechanum extends OpMode {
             leftRight = gamepad1.left_stick_x;
 
 
+
         double r = Math.hypot(leftRight, forAft) * translationInputScale;
         double robotAngle = Math.atan2(forAft, leftRight) - Math.PI / 4;
 
@@ -84,20 +92,20 @@ public class TeleOp_Mechanum extends OpMode {
         backRight.setPower(backRightSpeed);
 
 //---------------------------------------------------------------
-        if(gamepad1.right_bumper) motorWinch.setPower(0.8);
-        else if(gamepad1.left_bumper) motorWinch.setPower(-0.8);
-        else if(gamepad1.left_bumper && gamepad1.right_bumper) motorWinch.setPower(0);
+        if(gamepad2.right_bumper) motorWinch.setPower(0.8);
+        else if(gamepad2.left_bumper) motorWinch.setPower(-0.8);
+        else if(gamepad2.left_bumper && gamepad2.right_bumper) motorWinch.setPower(0);
         else motorWinch.setPower(0);
 
 //---------------------------------------------------------------
         if (gamepad1.a) claw = true;
         else if(claw) {
             if (servoLeftClaw.getPosition() == 1d) {
-                servoLeftClaw.setPosition(1d);
-                servoRightClaw.setPosition(0d);
-            } else {
                 servoLeftClaw.setPosition(0d);
                 servoRightClaw.setPosition(1d);
+            } else {
+                servoLeftClaw.setPosition(1d);
+                servoRightClaw.setPosition(0d);
             }
 
             claw = false;
@@ -110,6 +118,8 @@ public class TeleOp_Mechanum extends OpMode {
             extensionMotor.setPower(extensionSpeed);
         else
             extensionMotor.setPower(0d);
+
+//---------------------------------------------------------------
 
     }
 
