@@ -14,10 +14,10 @@ public abstract class AutonomousFourMotors extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 0.5;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
-    static final double     DRIVE_SPEED             = 0.6;
+    static final double     DRIVE_SPEED             = 0.4;
     static final double     TURN_SPEED              = 1;
 
     private DcMotor motorFrontRight;
@@ -37,8 +37,7 @@ public abstract class AutonomousFourMotors extends LinearOpMode {
         motorBackRight = hardwareMap.dcMotor.get("BR");
         motorBackLeft = hardwareMap.dcMotor.get("BL");
 
-        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotor.Direction.REVERSE);
 
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
