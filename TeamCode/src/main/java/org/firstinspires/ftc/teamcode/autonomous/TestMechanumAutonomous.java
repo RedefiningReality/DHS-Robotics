@@ -7,49 +7,45 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.ThreadPool;
 
+import org.firstinspires.ftc.robotcore.internal.android.dx.rop.cst.CstAnnotation;
+import org.firstinspires.ftc.robotcore.internal.system.SystemProperties;
 import org.firstinspires.ftc.teamcode.autonomous.dependencies.MechanumAutonomous;
+import org.firstinspires.ftc.teamcode.autonomous.dependencies.TBAutonomous;
+import org.firstinspires.ftc.teamcode.autonomous.dependencies.TBMechanumAutonomous;
+
+import static android.R.string.yes;
 
 /**
  * Created by robotics on 11/28/2017.*/
 @Autonomous(name="TestMechanumAutonomuous Four Motors", group="TestAutonomous")
-
-public class TestMechanumAutonomous extends LinearOpMode {
+public class TestMechanumAutonomous extends TBMechanumAutonomous {
 
     private DcMotor motorFrontRight;
     private DcMotor motorFrontLeft;
     private DcMotor motorBackRight;
     private DcMotor motorBackLeft;
 
+    private DcMotor winch;
+
     private ColorSensor colorSensor;
+
+    private Servo clawServo;
     private Servo leftClaw;
     private Servo rightClaw;
 
-    private DcMotor winch;
+    private boolean swap = true;
 
     private void initializeServos() throws InterruptedException {
         leftClaw = hardwareMap.servo.get("LC");
         rightClaw = hardwareMap.servo.get("RC");
+        clawServo = hardwareMap.servo.get("CS");
 
         openClaw();
     }
 
-    protected void initializeMotors() {
-        motorFrontRight = hardwareMap.dcMotor.get("FR");
-        motorFrontLeft = hardwareMap.dcMotor.get("FL");
-        motorBackRight = hardwareMap.dcMotor.get("BR");
-        motorBackLeft = hardwareMap.dcMotor.get("BL");
-
-        motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-
-        motorFrontLeft.setPower(0);
-        motorFrontRight.setPower(0);
-        motorBackLeft.setPower(0);
-        motorBackRight.setPower(0);
-
-        waitForStart();
-    }
+    private void initializeColorSensor() { colorSensor = hardwareMap.colorSensor.get("ColorSensor"); }
 
     private void initializeWinch() {
         winch = hardwareMap.dcMotor.get("winch");
@@ -57,31 +53,37 @@ public class TestMechanumAutonomous extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         initializeWinch();
+        initializeColorSensor();
         initializeServos();
         initializeMotors();
 
         closeClaw();
         raiseWinch(500);
 
-        forwards(1000);
-    }
+        clawServo.setPosition(1);
 
-    protected void forwards(double time) throws InterruptedException {
-        forwards(0.2, time);
-    }
+        while (swap){
+            colorSensor.enableLed(false);
 
-    protected void forwards(double speed, double time) throws InterruptedException {
-        motorBackLeft.setPower(speed);
-        motorBackRight.setPower(speed);
-        motorFrontLeft.setPower(speed);
-        motorFrontRight.setPower(speed);
+            if(colorSensor.red() > 30 && colorSensor.blue() < 25){
+                rotateLeft(700);
+                clawServo.setPosition(0);
+                rotateLeft(1000);
+                backwards(1000);
+                rotateLeft(4);
+                forwards(500);
 
-        Thread.sleep((long)time);
+                swap = false;
+            }
+            else if(colorSensor.blue() > 30 && colorSensor.red() < 25){
+                rotateRight(500);
+                clawServo.setPosition(0);
 
-        motorBackLeft.setPower(0);
-        motorBackRight.setPower(0);
-        motorFrontLeft.setPower(0);
-        motorFrontRight.setPower(0);
+                swap = false;
+            }
+         }
+
+        Thread.sleep(2000);
     }
 
     private void openClaw() throws InterruptedException {

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.autonomous.dependencies;
 
-public abstract class NormalAutonomous extends AutonomousFourMotors {
+public abstract class NormalAutonomous extends Autonomous {
 
     protected void forwards(double speed, double inches, double timeout) throws InterruptedException {
         drive(speed, inches, inches, timeout);

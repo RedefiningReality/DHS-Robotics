@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by robotics on 11/7/2017.
  */
 
-public abstract class AutonomousFourMotors extends LinearOpMode {
+public abstract class Autonomous extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
